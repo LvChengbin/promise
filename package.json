@@ -1,11 +1,11 @@
 {
-  "name": "url-polyfill",
+  "name": "promise-polyfill",
   "version": "1.0.0",
   "description": "",
-  "keywords": "url-polyfill",
+  "keywords": "promise-polyfill",
   "repository": {
     "type": "git",
-    "url": "git@gitlab.com:jaunty/jauntyjs.git"
+    "url": "git@github.com:LvChengbin/promise.git"
   },
   "devDependencies": {
     "eslint": "^4.14.0",
@@ -32,7 +32,7 @@
     "precommit-msg",
     "lint"
   ],
-  "main": "gulpfile.js",
+  "main": "",
   "author": "LvChengbin",
   "dependencies": {}
 }
