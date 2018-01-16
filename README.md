@@ -5,19 +5,19 @@ Promise implementation conforming the [Promises/A+](https://promisesaplus.com/) 
 ## Installing
 
 ~~~
-$ npm install @lvchengbin/promise --save
+    $ npm install @lvchengbin/promise --save
 ~~~
 
 ## Usage
 
 ### NodeJS
 
-~~~
-const Promise = require( '@lvchengbin/promise' );
+~~~javascript
+    const Promise = require( '@lvchengbin/promise' );
 ~~~
 
 ### ES6
 
-~~~
-import Promise from '@lvchengbin/promise';
+~~~javascript
+    import Promise from '@lvchengbin/promise';
 ~~~
