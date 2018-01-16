@@ -1,6 +1,6 @@
 {
   "name": "@lvchengbin/promise",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Promise/A+ implementation for browsers.",
   "keywords": "promise",
   "repository": {

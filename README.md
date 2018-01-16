@@ -22,6 +22,6 @@ const Promise = require( '@lvchengbin/promise' );
 import Promise from '@lvchengbin/promise';
 ```
 
-### Browser
+### Using in Browsers
 
 If you want to invoke the JavaScript file to browser directly, you can use [promise.js](https://raw.githubusercontent.com/LvChengbin/promise/master/dist/promise.js). For old browsers which are not support ES5, you should use [promise.bc.js](https://raw.githubusercontent.com/LvChengbin/promise/master/dist/promise.bc.js).
