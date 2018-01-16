@@ -3,6 +3,8 @@
 
 process.env.CHROME_BIN = require( 'puppeteer' ).executablePath();
 
+const resolve = require( 'rollup-plugin-node-resolve' );
+
 //const babel = require( 'rollup-plugin-babel' );
 
 module.exports = function(config) {
@@ -16,7 +18,7 @@ module.exports = function(config) {
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
         // Most versions of PhantomJS do not suppport ES5 and ES6, so add es6-shim here to make sure all
         // test cases could be executed in PhantomJS
-        frameworks: [ 'jasmine', 'es6-shim' ],
+        frameworks: [ 'jasmine' ],
 
 
         // list of files / patterns to load in the browser
@@ -35,7 +37,10 @@ module.exports = function(config) {
         // 
         rollupPreprocessor : {
             plugins : [
-                //babel()
+                resolve( {
+                    module : true,
+                    jsnext : true
+                } )
             ],
             output : {
                 format : 'iife'

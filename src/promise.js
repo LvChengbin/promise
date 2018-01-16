@@ -1,4 +1,5 @@
-import checks from './checks.js';
+import isFunction from '@lvchengbin/is/src/function';
+import isPromise from '@lvchengbin/is/src/promise';
 
 const Promise = class {
     constructor( fn ) {
@@ -6,7 +7,7 @@ const Promise = class {
             throw new TypeError( this + ' is not a promise ' );
         }
 
-        if( !checks.function( fn ) ) {
+        if( !isFunction( fn ) ) {
             throw new TypeError( 'Promise resolver ' + fn + ' is not a function' );
         }
 
@@ -25,8 +26,8 @@ const Promise = class {
     then( resolved, rejected ) {
         const promise = new Promise( () => {} );
         this[ '[[PromiseThenables]]' ].push( {
-            resolve : checks.function( resolved ) ? resolved : null,
-            reject : checks.function( rejected ) ? rejected : null,
+            resolve : isFunction( resolved ) ? resolved : null,
+            reject : isFunction( rejected ) ? rejected : null,
             called : false,
             promise
         } );
@@ -40,7 +41,7 @@ const Promise = class {
 };
 
 Promise.resolve = function( value ) {
-    if( !checks.function( this ) ) {
+    if( !isFunction( this ) ) {
         throw new TypeError( 'Promise.resolve is not a constructor' );
     }
     /**
@@ -53,7 +54,7 @@ Promise.resolve = function( value ) {
 };
 
 Promise.reject = function( reason ) {
-    if( !checks.function( this ) ) {
+    if( !isFunction( this ) ) {
         throw new TypeError( 'Promise.reject is not a constructor' );
     }
     return new Promise( ( resolve, reject ) => {
@@ -67,7 +68,7 @@ Promise.all = function( promises ) {
     return new Promise( ( resolve, reject ) => {
         let remaining = 0;
         const then = ( p, i ) => {
-            if( !checks.promise( p ) ) {
+            if( !isPromise( p ) ) {
                 p = Promise.resolve( p );
             }
             p.then( value => {
@@ -110,7 +111,7 @@ Promise.race = function( promises ) {
         }
 
         for( let promise of promises ) {
-            if( !checks.promise( promise ) ) {
+            if( !isPromise( promise ) ) {
                 promise = Promise.resolve( promise );
             }
             promise.then( onresolved, onrejected );

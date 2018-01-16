@@ -4,6 +4,18 @@
 	(global.Promise = factory());
 }(this, (function () { 'use strict';
 
+var isAsyncFunction = (function (fn) {
+  return {}.toString.call(fn) === '[object AsyncFunction]';
+});
+
+var isFunction = (function (fn) {
+  return {}.toString.call(fn) === '[object Function]' || isAsyncFunction(fn);
+});
+
+var isPromise = (function (p) {
+  return p && isFunction(p.then);
+});
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
   return typeof obj;
 } : function (obj) {
@@ -44,76 +56,6 @@ var createClass = function () {
   };
 }();
 
-var checks = {
-    plainObject: function plainObject(o) {
-        return !!o && Object.prototype.toString.call(o) === '[object Object]';
-    },
-    object: function object(src) {
-        return src && (typeof src === 'undefined' ? 'undefined' : _typeof(src)) === 'object';
-    },
-
-    string: function string(s) {
-        return typeof s === 'string' || s instanceof String;
-    },
-    arrowFunction: function arrowFunction(src) {
-        if (!checks.function(src)) return false;
-        return (/^(?:function)?\s*\(?[\w\s,]*\)?\s*=>/.test(src.toString())
-        );
-    },
-    boolean: function boolean(s) {
-        return typeof s === 'boolean';
-    },
-    promise: function promise(p) {
-        return p && checks.function(p.then);
-    },
-    function: function _function(f) {
-        var type = {}.toString.call(f).toLowerCase();
-        return type === '[object function]' || type === '[object asyncfunction]';
-    },
-    undefined: function undefined(s) {
-        return typeof s === 'undefined';
-    },
-    true: function _true(s) {
-        var generalized = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-        if (checks.boolean(s) || !generalized) return !!s;
-        if (checks.string(s)) {
-            s = s.toLowerCase();
-            return s === 'true' || s === 'yes' || s === 'ok' || s === '1';
-        }
-        return !!s;
-    },
-    false: function _false(s) {
-        var generalized = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-        if (checks.boolean(s) || !generalized) return !s;
-        if (checks.string(s)) {
-            s = s.toLowerCase();
-            return s === 'false' || s === 'no' || s === '0' || s === '';
-        }
-        return !s;
-    },
-    iterable: function iterable(obj) {
-        if (obj === null) return false;
-        var res = void 0;
-        try {
-            res = checks.function(obj[Symbol.iterator]);
-        } catch (e) {
-            return false;
-        }
-        return res;
-    },
-    array: function array(obj) {
-        return Array.isArray(obj);
-    }
-};
-
-'arguments,asyncfunction,number,date,regexp,error'.split(',').forEach(function (item) {
-    checks[item] = function (obj) {
-        return {}.toString.call(obj).toLowerCase() === '[object ' + item + ']';
-    };
-});
-
 var Promise$1 = function () {
     function Promise(fn) {
         classCallCheck(this, Promise);
@@ -122,7 +64,7 @@ var Promise$1 = function () {
             throw new TypeError(this + ' is not a promise ');
         }
 
-        if (!checks.function(fn)) {
+        if (!isFunction(fn)) {
             throw new TypeError('Promise resolver ' + fn + ' is not a function');
         }
 
@@ -143,8 +85,8 @@ var Promise$1 = function () {
         value: function then(resolved, rejected) {
             var promise = new Promise(function () {});
             this['[[PromiseThenables]]'].push({
-                resolve: checks.function(resolved) ? resolved : null,
-                reject: checks.function(rejected) ? rejected : null,
+                resolve: isFunction(resolved) ? resolved : null,
+                reject: isFunction(rejected) ? rejected : null,
                 called: false,
                 promise: promise
             });
@@ -161,7 +103,7 @@ var Promise$1 = function () {
 }();
 
 Promise$1.resolve = function (value) {
-    if (!checks.function(this)) {
+    if (!isFunction(this)) {
         throw new TypeError('Promise.resolve is not a constructor');
     }
     /**
@@ -174,7 +116,7 @@ Promise$1.resolve = function (value) {
 };
 
 Promise$1.reject = function (reason) {
-    if (!checks.function(this)) {
+    if (!isFunction(this)) {
         throw new TypeError('Promise.reject is not a constructor');
     }
     return new Promise$1(function (resolve, reject) {
@@ -188,7 +130,7 @@ Promise$1.all = function (promises) {
     return new Promise$1(function (resolve, reject) {
         var remaining = 0;
         var then = function then(p, i) {
-            if (!checks.promise(p)) {
+            if (!isPromise(p)) {
                 p = Promise$1.resolve(p);
             }
             p.then(function (value) {
@@ -259,7 +201,7 @@ Promise$1.race = function (promises) {
             for (var _iterator2 = promises[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
                 var promise = _step2.value;
 
-                if (!checks.promise(promise)) {
+                if (!isPromise(promise)) {
                     promise = Promise$1.resolve(promise);
                 }
                 promise.then(onresolved, onrejected);

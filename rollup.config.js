@@ -17,6 +17,7 @@ export default [ {
     input : 'src/promise.js',
     plugins : [
         resolve( {
+            module : true,
             jsnext : true
         } ),
         babel()

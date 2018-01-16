@@ -2,22 +2,26 @@
 
 Promise implementation conforming the [Promises/A+](https://promisesaplus.com/) for browsers.
 
-## Installing
+## Installation
 
-~~~
-    $ npm install @lvchengbin/promise --save
-~~~
+```js
+$ npm i @lvchengbin/promise --save
+```
 
 ## Usage
 
 ### NodeJS
 
-~~~javascript
-    const Promise = require( '@lvchengbin/promise' );
-~~~
+```js
+const Promise = require( '@lvchengbin/promise' );
+```
 
 ### ES6
 
-~~~javascript
-    import Promise from '@lvchengbin/promise';
-~~~
+```js
+import Promise from '@lvchengbin/promise';
+```
+
+### Browser
+
+If you want to invoke the JavaScript file to browser directly, you can use [promise.js](https://raw.githubusercontent.com/LvChengbin/promise/master/dist/promise.js). For old browsers which are not support ES5, you should use [promise.bc.js](https://raw.githubusercontent.com/LvChengbin/promise/master/dist/promise.bc.js).
