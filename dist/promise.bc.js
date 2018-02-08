@@ -171,6 +171,10 @@ Promise$1.all = function (promises) {
                 }
             }
         }
+
+        if (!i) {
+            resolve(res);
+        }
     });
 };
 

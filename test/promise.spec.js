@@ -358,6 +358,8 @@ describe( 'J/Core/Promise', () => {
 
         it( 'Should have transfered the rejected reason, that generated from the first rejected Promise object in the argument list, to the "catch" method', done => {
             Promise.all( [
+                Promise.resolve( 'resolve' ),
+                Promise.resolve( 'resolve' ),
                 Promise.reject( 'reject' ),
                 Promise.resolve( 'resolve' ),
                 Promise.reject( 'reject2' )
@@ -370,6 +372,12 @@ describe( 'J/Core/Promise', () => {
         it( 'Should have been converted to a "resolved" promise instance if an item in the argument is not a promise instance, and it should be the value of the promise instance', done => {
             Promise.all( [ 'a', 'b', Promise.resolve( 'c' ) ] ).then( value => {
                 expect( value ).toEqual( [ 'a', 'b', 'c' ] );
+                done();
+            } );
+        } );
+
+        it( 'Should return a resolved Promise if the argument is an empty array', done => {
+            Promise.all( [] ).then( () => {
                 done();
             } );
         } );
@@ -420,6 +428,13 @@ describe( 'J/Core/Promise', () => {
                 expect( value ).toEqual( 'a' );
                 done();
             } );
+        } );
+
+        it( 'Should return a pending Promise if the argument is an empty list', () => {
+            const promise = Promise.race( [] );
+            setTimeout( () => {
+               expect( promise[ '[[PromiseStatus]]' ] ).toEqual( 'pending' );
+            }, 10 );
         } );
 
     } );

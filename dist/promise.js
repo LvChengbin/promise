@@ -97,6 +97,9 @@ Promise.all = function( promises ) {
         for( let promise of promises ) {
             then( promise, remaining = i++ );
         }
+        if( !i ) {
+            resolve( res );
+        }
     } );
 };
 
