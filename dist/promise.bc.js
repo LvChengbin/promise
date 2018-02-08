@@ -155,7 +155,8 @@ Promise$1.all = function (promises) {
             for (var _iterator = promises[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 var promise = _step.value;
 
-                then(promise, remaining = i++);
+                remaining++;
+                then(promise, i++);
             }
         } catch (err) {
             _didIteratorError = true;

@@ -333,7 +333,23 @@ describe( 'J/Core/Promise', () => {
         }
 
         it( 'The Promise object should have been resolved after all Promise objects in the argument list resolved', done => {
-            Promise.all( [ Promise.resolve(), Promise.resolve() ] ).then( () => {
+            Promise.all( [ 
+                new Promise( resolve => {
+                    setTimeout( resolve, 50 );
+                } )
+            ] ).then( () => {
+                expect( true ).toBeTruthy();
+                done();
+            } );
+        } );
+
+        it( 'The Promise object should have been resolved after all Promise objects in the argument list resolved', done => {
+            Promise.all( [ 
+                new Promise( resolve => {
+                    setTimeout( resolve, 50 );
+                } ),
+                Promise.resolve() 
+            ] ).then( () => {
                 expect( true ).toBeTruthy();
                 done();
             } );
