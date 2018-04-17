@@ -398,6 +398,32 @@ describe( 'J/Core/Promise', () => {
             } );
         } );
 
+        it( '~~~~~~', done => {
+            let i = 0;
+
+            function f1() {
+                return Promise.all( [] );
+            }
+
+            function f2() {
+                return Promise.resolve();
+            }
+            Promise.all( [
+                f1(),
+                f2().then( () => {
+                    return new Promise( resolve => {
+                        setTimeout( () => {
+                            i++;
+                            resolve();
+                        } );
+                    } );
+                } )
+            ] ).then( () => {
+                expect( i ).toEqual( 1 );
+                done();
+            } );
+        } );
+
     } );
     
     describe( 'Promise.race', () => {

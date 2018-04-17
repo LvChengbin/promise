@@ -135,9 +135,9 @@ Promise$1.all = function (promises) {
             }
             p.then(function (value) {
                 res[i] = value;
-                if (--remaining === 0) {
-                    resolve(res);
-                }
+                setTimeout(function () {
+                    if (--remaining === 0) resolve(res);
+                }, 0);
             }, function (reason) {
                 if (!rejected) {
                     reject(reason);

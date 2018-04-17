@@ -82,9 +82,9 @@ Promise.all = function( promises ) {
             }
             p.then( value => {
                 res[ i ] = value;
-                if( --remaining === 0 ) {
-                    resolve( res );
-                }
+                setTimeout( () => {
+                    if( --remaining === 0 ) resolve( res );
+                }, 0 );
             }, reason => {
                 if( !rejected ) {
                     reject( reason );
