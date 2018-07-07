@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Promise</title>
+        <script src="/dist/promise.bc.js"></script> 
+    </head>
+    <body>
+        <script>
+            new Promise( function( resolve ) {
+                setTimeout( function() {
+                    resolve( 100 );
+                }, 1000 );
+            } ).then( function( value ) {
+                console.log( value );
+            } );
+        </script>
+    </body>
+</html>

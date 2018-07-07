@@ -4,6 +4,21 @@
 	(global.Promise = factory());
 }(this, (function () { 'use strict';
 
+/**
+ * async function
+ *
+ * @syntax: 
+ *  async function() {}
+ *  async () => {}
+ *  async x() => {}
+ *
+ * @compatibility
+ * IE: no
+ * Edge: >= 15
+ * Android: >= 5.0
+ *
+ */
+
 function isAsyncFunction (fn) { return ( {} ).toString.call( fn ) === '[object AsyncFunction]'; }
 
 function isFunction (fn) { return ({}).toString.call( fn ) === '[object Function]' || isAsyncFunction( fn ); }

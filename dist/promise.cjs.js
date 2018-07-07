@@ -1,5 +1,20 @@
 'use strict';
 
+/**
+ * async function
+ *
+ * @syntax: 
+ *  async function() {}
+ *  async () => {}
+ *  async x() => {}
+ *
+ * @compatibility
+ * IE: no
+ * Edge: >= 15
+ * Android: >= 5.0
+ *
+ */
+
 var isAsyncFunction = fn => ( {} ).toString.call( fn ) === '[object AsyncFunction]';
 
 var isFunction = fn => ({}).toString.call( fn ) === '[object Function]' || isAsyncFunction( fn );
