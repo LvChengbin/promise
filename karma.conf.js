@@ -3,7 +3,7 @@
 
 process.env.CHROME_BIN = require( 'puppeteer' ).executablePath();
 const path = require( 'path' );
-const  argv = require( 'optimist' ).argv;
+const argv = require( 'optimist' ).argv;
 const resolve = require( 'rollup-plugin-node-resolve' );
 const buble = require( 'rollup-plugin-buble' );
 const serve = require( 'koa-static' );
