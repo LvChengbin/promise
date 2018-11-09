@@ -1,5 +1,7 @@
 # Promise
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/LvChengbin/promise.svg)](https://greenkeeper.io/)
+
 Promise implementation conforming the [Promises/A+](https://promisesaplus.com/) for browsers.
 
 ## Installation
